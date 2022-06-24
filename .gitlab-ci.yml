@@ -1,0 +1,21 @@
+stages:
+  - publish
+
+cache:
+  paths:
+    - node_modules
+
+build:
+  image: node:lts
+  stage: publish
+  before_script:
+    - npm install
+  script:
+    - npm run build
+#    - echo '//nexus.utg.group/repository/npm-registry/:_authToken=${UTG_NPM_TOKEN}'>.npmrc
+    - npm publish
+  tags:
+    - build
+  only:
+    refs:
+      - master
